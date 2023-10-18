@@ -1,0 +1,43 @@
+Properties of a tree to be a max heap - Completeness and Value of node greater than or equal to its child.
+Input:
+      5
+    /  \
+   2    3
+Output: 1
+Explanation: The given tree follows max-heap property since 5,
+is root and it is greater than both its children.
+Code:
+
+class Solution {
+  public:
+  int count(Node* root){
+      if(!root) return 0;
+      int left=count(root->left);
+      int right=count(root->right);
+      return left+right+1;
+  }
+  bool checkBalanced(Node* root,int i,int n){
+      if(!root) return true;
+      if(i>n) return false;
+      return checkBalanced(root->left,2*i,n) && checkBalanced(root->right,2*i+1,n);
+  }
+  bool Maxheap(Node*root,int n){
+      if(!root) return true;
+      bool ans=false;
+      if(root->left==NULL && root->right==NULL){
+          ans=true;
+      }
+      else if(root->left && !root->right){
+          return ans=root->data>root->left->data;
+      }
+      else{
+          return ans=root->data>root->left->data && root->data>root->right->data;
+      }
+      return ans;
+  }
+    bool isHeap(struct Node* tree) {
+        int n=count(tree);
+        int i=1;
+        return checkBalanced(tree,i,n) && Maxheap(tree,n);
+    }
+};
